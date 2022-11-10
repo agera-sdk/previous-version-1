@@ -1,0 +1,2 @@
+[workspace]
+members = ["api/rialight", "api/rialight_display", "api/rialight_filesystem", "api/rialight_localization", "api/rialight_net", "api/rialight_pi", "api/rialight_sound"]

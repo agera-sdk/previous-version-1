@@ -1,0 +1,6 @@
+[application]
+short-id = "$projectshortid"
+full-id = "$projectfullid"
+
+[[install-files]]
+match = "res/lang/**/*.json"
