@@ -479,7 +479,7 @@ pub fn normalize<S: AsRef<str>>(path: S) -> String {
     let trailing_separator = path.char_at(path.len() - 1) == '/';
 
     // normalize the path
-    path = normalize_string(path.clone(), !is_absolute, SvStr::From("/"), is_posix_path_separator);
+    path = normalize_string(path.clone(), !is_absolute, SvStr::from("/"), is_posix_path_separator);
 
     if path.len() == 0 {
         if is_absolute {
