@@ -3,10 +3,13 @@
 use std::{path::{Path, PathBuf}, time::SystemTime};
 use lazy_regex::{regex_find, regex_replace, regex_is_match};
 use sv_str::SvStr;
+use rialight_util::{AnyStringType};
 
 mod path_helpers;
 
+#[doc(hidden)]
 pub static mut APPLICATION_DIRECTORY: Option<String> = None;
+#[doc(hidden)]
 pub static mut APPLICATION_STORAGE_DIRECTORY: Option<String> = None;
 
 pub type IoError = std::io::Error;
@@ -50,8 +53,8 @@ impl FileScheme {
 
 impl File {
     /// Constructs a new `File` object.
-    pub fn new<T: AsRef<str>>(url_or_path: T) -> Self {
-        let url_or_path = String::from(url_or_path.as_ref());
+    pub fn new(url_or_path: impl AnyStringType) -> Self {
+        let url_or_path = String::from(url_or_path.convert());
         let mut path = String::from("");
         let mut scheme: FileScheme = FileScheme::File;
 
@@ -99,9 +102,9 @@ impl File {
     }
 
     /// The last portion of this path, excluding the given suffix.
-    pub fn name_without_suffix<S: AsRef<str>>(&self, suffix: S) -> String {
+    pub fn name_without_suffix(&self, suffix: impl AnyStringType) -> String {
         let s = SvStr::from(self.name());
-        let suffix = SvStr::from(suffix.as_ref());
+        let suffix = SvStr::from(suffix.convert());
         (if s.ends_with(&suffix.to_string()) { s.slice(..(s.len() - suffix.len())) } else { s }).to_string()
     }
 
@@ -142,11 +145,11 @@ impl File {
     }
 
     /// Resolves relative path.
-    pub fn resolve_path<S: AsRef<str>>(&self, arg: S) -> Self {
+    pub fn resolve_path(&self, arg: impl AnyStringType) -> Self {
         let r = if self.m_scheme == FileScheme::File {
-            path_helpers::resolve(&self.m_path.clone(), arg.as_ref())
+            path_helpers::resolve(&self.m_path.clone(), arg.convert())
         } else {
-            path_helpers::posix_resolve(&self.m_path.clone(), arg.as_ref())
+            path_helpers::posix_resolve(&self.m_path.clone(), arg.convert())
         };
         File {
             m_scheme: self.m_scheme,
@@ -240,11 +243,11 @@ impl File {
         if self.m_scheme == FileScheme::App {
             let l = File::new(unsafe {APPLICATION_DIRECTORY.clone()}.unwrap_or("".to_owned()));
             let r = regex_replace!(r"^[\\/]", self.native_path().as_ref(), |_| "").to_owned().to_string();
-            l.resolve_path(&r).native_path().clone()
+            l.resolve_path(r).native_path().clone()
         } else if self.m_scheme == FileScheme::AppStorage {
             let l = File::new(unsafe {APPLICATION_STORAGE_DIRECTORY.clone()}.unwrap_or("".to_owned()));
             let r = regex_replace!(r"^[\\/]", self.native_path().as_ref(), |_| "").to_owned().to_string();
-            l.resolve_path(&r).native_path().clone()
+            l.resolve_path(r).native_path().clone()
         } else {
             self.native_path().clone()
         }
