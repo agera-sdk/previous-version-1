@@ -8,4 +8,4 @@ mod region;
 pub use region::Region;
 
 mod locale_bundle;
-pub use locale_bundle::LocaleBundle;
+pub use locale_bundle::*;
