@@ -39,6 +39,7 @@ macro_rules! bundle_vars {
     };
 }
 
+/// Loads and stores locale-based messages.
 pub struct LocaleBundle {
     m_current_locale: Option<Language>,
     m_locale_path_components: Arc<HashMap<Language, String>>,
@@ -161,7 +162,7 @@ impl LocaleBundle {
                         panic!("Fallback locale is not supported a locale: {}", locale.tag());
                     }
                     let res_path = format!("{}/{}/{}.json", self.m_assets_src, locale_path_comp.unwrap(), base_name);
-                    let content = std::fs::read(res_path.clone());
+                    let content = rialight_filesystem::File::new(res_path.clone()).read_bytes();
                     if content.is_err() {
                         println!("Failed to load resource at {}.", res_path);
                         return None;
@@ -414,13 +415,13 @@ impl LocaleBundleOptionsForAssets {
         }
     }
     
-    pub fn src<S: ToString>(&self, src: S) -> &Self {
-        self.m_src.replace(src.to_string());
+    pub fn src(&self, src: impl AnyStringType) -> &Self {
+        self.m_src.replace(src.convert().to_owned());
         self
     } 
 
-    pub fn base_file_names<S: ToString>(&self, list: Vec<S>) -> &Self {
-        self.m_base_file_names.replace(list.iter().map(|name| name.to_string()).collect());
+    pub fn base_file_names(&self, list: Vec<impl AnyStringType>) -> &Self {
+        self.m_base_file_names.replace(list.iter().map(|name| name.convert().to_owned()).collect());
         self
     }
 
