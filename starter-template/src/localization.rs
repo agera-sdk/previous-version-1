@@ -1,36 +1,37 @@
 use crate::prelude::*;
 use rialight::localization::{
-    MessageLocator,
-    MessageLocatorFormatArgument,
-    MessageLocatorOptions,
-    MessageLocatorAssetOptions,
-    MessageLocatorLoadMethod,
+    LocaleBundle,
+    LocaleBundleFormatArgument,
+    LocaleBundleOptions,
+    LocaleBundleOptionsForAssets,
+    LocaleBundleLoadMethod,
     Language,
     Region,
     Direction,
 };
+use rialight::util::{AnyStringType};
 use maplit::hashmap;
 
 lazy_static! {
-    pub static ref L: MessageLocator = MessageLocator::new(
-        MessageLocatorOptions::new()
+    pub static ref B: LocaleBundle = LocaleBundle::new(
+        LocaleBundleOptions::new()
             .supported_locales(vec!["en-US"])
             .default_locale("en-US")
             .fallbacks(hashmap! {})
-            .assets(MessageLocatorAssetOptions::new()
+            .assets(LocaleBundleOptionsForAssets::new()
                 .src("app://res/lang")
                 .base_file_names(
                     vec!["_"] // _.json
                 )
                 .clean_unused(true)
-                .load_method(MessageLocatorLoadMethod::FileSystem))
+                .load_method(LocaleBundleLoadMethod::FileSystem))
     ); // msg_locator
 }
 
-pub fn t<S: ToString>(id: S) -> String {
+pub fn t(id: impl AnyStringType) -> String {
     tf(id, vec![])
 }
 
-pub fn tf<S: ToString>(id: S, options: Vec<&dyn MessageLocatorFormatArgument>) -> String {
-    L.get_formatted(id, options)
+pub fn tf(id: impl AnyStringType, options: Vec<&dyn LocaleBundleFormatArgument>) -> String {
+    B.get_formatted(id, options)
 }

@@ -4,6 +4,7 @@ pub use rialight_filesystem as filesystem;
 pub use rialight_localization as localization;
 pub use rialight_net as net;
 pub use rialight_sound as sound;
+pub use rialight_util as util;
 */
 
 pub mod prelude {
@@ -15,5 +16,4 @@ pub mod prelude {
         BytesRegex, BytesRegexBuilder,
         Captures, Lazy, Regex, RegexBuilder,
     };
-    pub use sv_str::SvStr;
 }
