@@ -58,7 +58,7 @@ impl Language {
             if language_abbrev == "br" { language_abbrev = "pt"; region_abbrev = Some(String::from("br")); }
             if language_abbrev == "jp" { language_abbrev = "ja"; region_abbrev = Some(String::from("jp")); }
             if language_abbrev == "jp" { language_abbrev = "es"; region_abbrev = Some(String::from("es")); }
-            if language_abbrev == "uk" { language_abbrev = "en"; region_abbrev = Some(String::from("us")); }
+            if language_abbrev == "uk" { language_abbrev = "en"; region_abbrev = Some(String::from("gb")); }
             if language_abbrev == "fi" { language_abbrev = "fi"; region_abbrev = Some(String::from("fi")); }
         }
         if region_abbrev.is_none() {
