@@ -266,7 +266,6 @@ impl LocaleBundle {
     }
 
     fn apply_message(&self, message: String, vars: &HashMap<String, String>) -> String {
-        // regex!(r"\$(\$|[A-Za-z0-9]+)").replace_all(&message, R { m_vars: vars }).as_ref().to_string()
         regex!(r"\$(\$|[A-Za-z0-9]+)").replace_all(&message, |s: &regex::Captures<'_>| {
             let s = s.get(0).unwrap().as_str();
             if s == "$$" {
