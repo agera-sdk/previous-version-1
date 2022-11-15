@@ -18,7 +18,7 @@ The module [`rialight::localization`](https://crates.io/crates/rialight_localiza
 
 The module `crate::localization`, which is defined at the file `src/localization.rs`, contains setup for a global `LocaleBundle` instance. Edit the file as needed. For example, you may add more `supported_locales`.
 
-The module `crate::localization` provides two utilities:
+The module `crate::localization` provides three utilities:
 - `B` (a `LocaleBundle` instance),
 - `t` (translate function) and
 - `tf` (translate function with formatting).
