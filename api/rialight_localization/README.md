@@ -13,7 +13,7 @@ tokio = { version = "1", features = ["full"] }
 
 Example asset located at `res/lang/en/_.json`:
 
-```
+```json
 {
     "message_id": "Some message",
     "parameterized": "Here: $x",
@@ -28,7 +28,7 @@ Example asset located at `res/lang/en/_.json`:
 
 Example usage:
 
-```
+```rust
 use rialight_localization::{
     LocaleBundle, LocaleBundleOptions, LocaleBundleOptionsForAssets,
     LocaleBundleLoadMethod,
