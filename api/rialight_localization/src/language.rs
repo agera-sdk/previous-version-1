@@ -54,7 +54,7 @@ impl Language {
         let mut region_abbrev = if tag_split.len() == 2 { Some(String::from(tag_split[1])) } else { None };
         if region_abbrev.is_none() {
             if language_abbrev == "en" || language_abbrev == "us" || language_abbrev == "usa" { language_abbrev = "en"; region_abbrev = Some(String::from("us")); }
-            if language_abbrev == "pt" { language_abbrev = "pt"; region_abbrev = Some(String::from("pt")); }
+            if language_abbrev == "pt" { language_abbrev = "pt"; region_abbrev = Some(String::from("br")); }
             if language_abbrev == "br" { language_abbrev = "pt"; region_abbrev = Some(String::from("br")); }
             if language_abbrev == "jp" { language_abbrev = "ja"; region_abbrev = Some(String::from("jp")); }
             if language_abbrev == "jp" { language_abbrev = "es"; region_abbrev = Some(String::from("es")); }
