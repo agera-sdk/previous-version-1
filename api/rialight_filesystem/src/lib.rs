@@ -35,7 +35,7 @@ pub struct File {
     m_scheme: FileScheme,
 }
 
-#[derive(Clone, Copy, Eq, PartialEq, Trace, Finalize)]
+#[derive(Clone, Eq, PartialEq, Trace, Finalize)]
 enum FileScheme {
     File,
     App,
@@ -153,7 +153,7 @@ impl File {
             path_helpers::posix_resolve(&self.m_path.clone(), arg.convert())
         };
         File {
-            m_scheme: self.m_scheme,
+            m_scheme: self.m_scheme.clone(),
             m_path: r,
         }
     }
