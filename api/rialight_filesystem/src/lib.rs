@@ -4,6 +4,7 @@ use std::{path::{Path, PathBuf}, time::SystemTime};
 use lazy_regex::{regex_find, regex_replace, regex_is_match};
 use sv_str::SvStr;
 use rialight_util::{AnyStringType};
+use gc::{Trace, Finalize};
 
 mod path_helpers;
 
@@ -28,13 +29,13 @@ pub type IoErrorKind = std::io::ErrorKind;
 /// The `File` constructor performs implicit normalization of the
 /// given path argument.
 /// 
-#[derive(Clone, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq, Trace, Finalize)]
 pub struct File {
     m_path: String,
     m_scheme: FileScheme,
 }
 
-#[derive(Clone, Copy, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq, Trace, Finalize)]
 enum FileScheme {
     File,
     App,
